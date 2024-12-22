@@ -1,7 +1,8 @@
+# Visit https://github.com/lowlighter/metrics#-documentation for full reference
 name: Metrics
 on:
   # Schedule updates (each hour)
-  schedule: [{cron: "0 0 * * *"}]
+  schedule: [{cron: "0 * * * *"}]
   # Lines below let you run workflow manually and on each commit
   workflow_dispatch:
   push: {branches: ["master", "main"]}
@@ -11,11 +12,12 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: lowlighter/metrics@v3.34
+      - uses: lowlighter/metrics@latest
         with:
           # Your GitHub token
           # The following scopes are required:
-          #  - repo
+          #  - read:user
+          #  - read:org
           #  - public_access (default scope)
           # The following additional scopes may be required:
           #  - read:org      (for organization related metrics)
@@ -25,10 +27,10 @@ jobs:
           token: ${{ secrets.METRICS_TOKEN }}
 
           # Options
-          user: Noah-Haf
+          user: noah-haf
           template: classic
           base: header, activity, community, repositories, metadata
           config_timezone: Europe/London
-          plugin_traffic: yes
-          plugin_people: yes
-          plugin_people_limit: 5
+          plugin_sponsorships: yes
+          plugin_sponsorships_sections: amount, sponsorships
+          plugin_sponsorships_size: 24
